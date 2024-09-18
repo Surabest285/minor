@@ -156,11 +156,129 @@
         .close-button:hover {
             color: #00cccc;
         }
+
+        #luckyWheel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            background: #000; /* Changed to black */
+            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+        }
+
+        .wheel-section {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            left: 50%;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-left: 2px solid #0ff; /* Added blue border */
+        }
+
+        .wheel-section span {
+            display: inline-block;
+            transform-origin: center;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+            color: #0ff; /* Changed text color to blue */
+            text-shadow: 0 0 2px #fff, 0 0 5px #0ff; /* Added glow effect */
+        }
+
+        #spinButton {
+            margin-top: 20px;
+            background-color: rgba(0, 255, 255, 0.2);
+            border: 2px solid #0ff;
+            color: #0ff;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        #spinButton:hover {
+            background-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 20px #0ff;
+        }
+
+        #spinButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #tonScoreDisplay {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            background-color: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #0ff;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        #autoHashDisplay {
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            font-size: 18px;
+            background-color: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #0ff;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        #quizContainer {
+            display: none;
+        }
+        
+        .task-options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .task-option {
+            background-color: rgba(0, 255, 255, 0.1);
+            border: 2px solid #0ff;
+            color: #0ff;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .task-option:hover {
+            background-color: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        #gameCanvas {
+            border: 2px solid #0ff;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <canvas id="particleCanvas"></canvas>
-    
+
+    <div id="tonScoreDisplay">TON Score: <span id="tonScoreValue">0.000</span></div>
+    <div id="autoHashDisplay">Auto Hash: <span id="autoHashValue">1.0</span> per hour</div>
+
     <div class="quantum-button" id="miningButton">
         <div class="button-content">
             <p class="button-text">Quantum TON</p>
@@ -178,34 +296,22 @@
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2 id="modalTitle"></h2>
-            <p id="modalContent"></p>
+            <div id="modalContent"></div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        particlesJS('particleCanvas', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#0ff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true, animation: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-                size: { value: 3, random: true, animation: { enable: true, speed: 4, size_min: 0.3, sync: false } },
-                line_linked: { enable: true, distance: 150, color: "#0ff", opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
-                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
-
         let totalHashes = 0;
         let tonMined = 0;
+        let tonScore = 0;
+        let autoHashRate = 1;
+        let lastGamePlayTime = 0;
+        let hasCard = false;
         const miningButton = document.getElementById('miningButton');
         const miningStatus = document.getElementById('miningStatus');
+        const autoHashDisplay = document.getElementById('autoHashValue');
+        const tonScoreDisplay = document.getElementById('tonScoreValue');
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
@@ -219,13 +325,33 @@
 
         function mine() {
             totalHashes++;
-            tonMined += 0.000001; // Each hash mines 0.000001 TON
+            tonMined = totalHashes / 1000; // 1000 hashes = 1 TON
             updateMiningStats();
+            updateTonScore();
             animateButton();
         }
 
+        function autoHash() {
+            totalHashes += autoHashRate / 3600;
+            tonMined = totalHashes / 1000;
+            updateMiningStats();
+            updateTonScore();
+            updateAutoHashDisplay();
+        }
+
+        setInterval(autoHash, 1000);
+
         function updateMiningStats() {
-            miningStatus.textContent = `${totalHashes.toLocaleString()} Hashes\n${tonMined.toFixed(6)} TON`;
+            miningStatus.textContent = `${totalHashes.toLocaleString()} Hashes\n${tonMined.toFixed(3)} TON`;
+        }
+
+        function updateTonScore() {
+            tonScore = tonMined;
+            tonScoreDisplay.textContent = tonScore.toFixed(3);
+        }
+
+        function updateAutoHashDisplay() {
+            autoHashDisplay.textContent = autoHashRate.toFixed(1);
         }
 
         function animateButton() {
@@ -237,7 +363,7 @@
 
         function showModal(title, content) {
             modalTitle.textContent = title;
-            modalContent.textContent = content;
+            modalContent.innerHTML = content;
             modal.style.display = 'flex';
         }
 
@@ -245,25 +371,378 @@
             modal.style.display = 'none';
         }
 
+        function generateQuizQuestions() {
+            const questions = [
+                { question: "What is the capital of France?", options: ["London", "Berlin", "Paris", "Madrid"], correct: 2 },
+                { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], correct: 1 },
+                { question: "Who painted the Mona Lisa?", options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"], correct: 1 },
+                { question: "What is the largest planet in our solar system?", options: ["Mars", "Jupiter", "Saturn", "Earth"], correct: 1 },
+                { question: "What is the chemical symbol for gold?", options: ["Go", "Gd", "Au", "Ag"], correct: 2 },
+                { question: "Which country is known as the Land of the Rising Sun?", options: ["China", "Korea", "Japan", "Thailand"], correct: 2 },
+                { question: "What is the smallest prime number?", options: ["0", "1", "2", "3"], correct: 2 },
+                { question: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], correct: 1 },
+                { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Perth"], correct: 2 },
+                { question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
+                { question: "What is the largest organ in the human body?", options: ["Heart", "Brain", "Liver", "Skin"], correct: 3 },
+                { question: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Joseph Lister"], correct: 1 },
+                { question: "What is the capital of Canada?", options: ["Toronto", "Vancouver", "Montreal", "Ottawa"], correct: 3 },
+                { question: "Which element has the chemical symbol 'O'?", options: ["Osmium", "Oxygen", "Oganesson", "Olivine"], correct: 1 },
+                { question: "What is the largest ocean on Earth?", options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], correct: 3 },
+                { question: "Who is known as the father of modern physics?", options: ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Niels Bohr"], correct: 1 },
+                { question: "What is the currency of Japan?", options: ["Yuan", "Won", "Yen", "Ringgit"], correct: 2 },
+                { question: "Which planet is closest to the Sun?", options: ["Venus", "Mars", "Mercury", "Earth"], correct: 2 },
+                { question: "What is the capital of Brazil?", options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"], correct: 2 },
+                { question: "Who painted 'The Starry Night'?", options: ["Pablo Picasso", "Claude Monet", "Vincent van Gogh", "Leonardo da Vinci"], correct: 2 }
+            ];
+            return questions;
+        }
+
+        function startQuiz() {
+            const quizContainer = document.getElementById('quizContainer');
+            const startQuizButton = document.getElementById('startQuizButton');
+            quizContainer.style.display = 'block';
+            startQuizButton.style.display = 'none';
+
+            const questions = generateQuizQuestions();
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function displayQuestion() {
+                const questionText = document.getElementById('questionText');
+                const answerOptions = document.getElementById('answerOptions');
+                const currentQuestion = questions[currentQuestionIndex];
+
+                questionText.textContent = currentQuestion.question;
+                answerOptions.innerHTML = '';
+
+                currentQuestion.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('action-button');
+                    button.addEventListener('click', () => checkAnswer(index));
+                    answerOptions.appendChild(button);
+                });
+
+                document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+                document.getElementById('currentScore').textContent = score;
+            }
+
+            function checkAnswer(selectedIndex) {
+                const currentQuestion = questions[currentQuestionIndex];
+                if (selectedIndex === currentQuestion.correct) {
+                    score++;
+                }
+
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }
+
+            function finishQuiz() {
+                quizContainer.innerHTML = `<p>Quiz completed! Your score: ${score}/20</p>`;
+                autoHashRate += score;
+                updateAutoHashDisplay();
+                alert(`Congratulations! Your auto hash rate has increased by ${score}!`);
+                closeModal();
+                lastGamePlayTime = Date.now();
+            }
+
+            displayQuestion();
+        }
+
+        function showQuizContent() {
+            const quizContent = `
+                <h3>Daily Quiz Challenge</h3>
+                <p>Answer 20 questions to increase your auto hash rate!</p>
+                <div id="quizContainer" style="display:none;">
+                    <p id="questionText"></p>
+                    <div id="answerOptions"></div>
+                    <p id="quizProgress">Question <span id="currentQuestion">1</span>/20</p>
+                    <p id="quizScore">Score: <span id="currentScore">0</span></p>
+                </div>
+                <button id="startQuizButton" class="action-button">Start Quiz</button>
+            `;
+            document.getElementById('taskContent').innerHTML = quizContent;
+            document.getElementById('startQuizButton').addEventListener('click', startQuiz);
+        }
+
         function showDailyTask() {
-            showModal("Daily Task", "Complete 1000 hashes today to earn a bonus of 0.01 TON!");
+            const currentTime = Date.now();
+            const timeElapsed = (currentTime - lastGamePlayTime) / (1000 * 60 * 60); // hours
+            const canPlay = timeElapsed >= 24 || lastGamePlayTime === 0;
+
+            let content = `
+                <h3>Daily Task</h3>
+                <div class="task-options">
+                    <button class="task-option" id="quizOption">Quiz</button>
+                    <button class="task-option" id="joinOption">Join</button>
+                    <button class="task-option" id="gameOption">Game</button>
+                </div>
+                <div id="taskContent"></div>
+            `;
+
+            showModal("Daily Task", content);
+
+            if (canPlay) {
+                document.getElementById('quizOption').addEventListener('click', showQuizContent);
+                document.getElementById('joinOption').addEventListener('click', showJoinContent);
+                document.getElementById('gameOption').addEventListener('click', showGameContent);
+            } else {
+                const hoursLeft = Math.ceil(24 - timeElapsed);
+                document.getElementById('taskContent').innerHTML = `<p>You can play again in ${hoursLeft} hours.</p>`;
+            }
+        }
+
+        function showJoinContent() {
+            const joinContent = `
+                <h3>Join Telegram Channels</h3>
+                <p>Join our Telegram channels to receive 100 TON scores!</p>
+                <ul>
+                    <li><a href="https://t.me/toncoin" target="_blank">TON Community</a></li>
+                    <li><a href="https://t.me/tondev" target="_blank">TON Developers</a></li>
+                    <li><a href="https://t.me/tonstats" target="_blank">TON Stats</a></li>
+                </ul>
+                <button id="claimJoinReward" class="action-button">Claim Reward</button>
+            `;
+            document.getElementById('taskContent').innerHTML = joinContent;
+            document.getElementById('claimJoinReward').addEventListener('click', claimJoinReward);
+        }
+
+        function claimJoinReward() {
+            tonScore += 100;
+            updateTonScore();
+            alert("You've received 100 TON scores for joining our Telegram channels!");
+            closeModal();
+        }
+
+        function showGameContent() {
+            const gameContent = `
+                <h3>Card Catcher Game</h3>
+                <p>Catch the falling cards to earn a Lucky Draw card!</p>
+                <canvas id="gameCanvas" width="300" height="400"></canvas>
+                <button id="startGameButton" class="action-button">Start Game</button>
+            `;
+            document.getElementById('taskContent').innerHTML = gameContent;
+            document.getElementById('startGameButton').addEventListener('click', startCardGame);
+        }
+
+        function startCardGame() {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            let cardY = 0;
+            let cardX = Math.random() * (canvas.width - 50);
+            let basketX = canvas.width / 2 - 25;
+            let score = 0;
+            let gameInterval;
+            let cardSpeed = 2;
+
+            document.getElementById('startGameButton').style.display = 'none';
+
+            function drawCard() {
+                ctx.fillStyle = '#0ff';
+                ctx.fillRect(cardX, cardY, 50, 75);
+            }
+
+            function drawBasket() {
+                ctx.fillStyle = '#0ff';
+                ctx.fillRect(basketX, canvas.height - 20, 50, 20);
+            }
+
+            function updateGame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                cardY += cardSpeed;
+
+                if (cardY > canvas.height) {
+                    cardY = 0;
+                    cardX = Math.random() * (canvas.width - 50);
+                    cardSpeed = Math.min(cardSpeed + 0.5, 8);
+                }
+
+                if (cardY + 75 >= canvas.height - 20 && cardX < basketX + 50 && cardX + 50 > basketX) {
+                    score++;
+                    cardY = 0;
+                    cardX = Math.random() * (canvas.width - 50);
+                    cardSpeed = Math.min(cardSpeed + 0.5, 8);
+                }
+
+                drawCard();
+                drawBasket();
+
+                ctx.fillStyle = '#0ff';
+                ctx.font = '20px Orbitron';
+                ctx.fillText(`Score: ${score}`, 10, 30);
+
+                if (score >= 15) {
+                    clearInterval(gameInterval);
+                    hasCard = true;
+                    alert("Congratulations! You've earned a Lucky Draw card!");
+                    closeModal();
+                }
+            }
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                basketX = e.clientX - rect.left - 25;
+            });
+
+            gameInterval = setInterval(updateGame, 20);
         }
 
         function showLuckyDraw() {
-            const prize = Math.random() < 0.1 ? "0.1 TON" : "Try again tomorrow!";
-            showModal("Lucky Draw", `You won: ${prize}`);
+            let wheelContent = `
+                <div id="luckyWheel"></div>
+                <button id="spinButton" class="action-button">Spin the Wheel</button>
+                <p id="cardStatus">Available Lucky Draw cards: ${hasCard ? 1 : 0}</p>
+            `;
+            
+            if (!hasCard) {
+                wheelContent += `<p>You need a Lucky Draw card to spin the wheel. Play the Card Catcher game to earn one!</p>`;
+            }
+
+            showModal("Lucky Draw", wheelContent);
+            createLuckyWheel();
+            
+            const spinButton = document.getElementById('spinButton');
+            spinButton.disabled = !hasCard;
+        }
+
+        function createLuckyWheel() {
+            const wheel = document.getElementById('luckyWheel');
+            const prizes = ['100 Hash/hr', '100 TON Score', '5 TON', '50 Hash/hr', '2 Lucky Cards', '4 Lucky Cards'];
+            const probabilities = [15, 5, 25, 25, 20, 15]; // Percentages
+            const colors = ['#000', '#000', '#000', '#000', '#000', '#000']; // Added to make the sections black
+            
+            let currentAngle = 0;
+            probabilities.forEach((prob, index) => {
+                const section = document.createElement('div');
+                section.className = 'wheel-section';
+                const angle = (prob / 100) * 360;
+                section.style.transform = `rotate(${currentAngle}deg) skew(${90 - angle}deg)`;
+                section.style.background = colors[index]; // Color changes to black
+                section.innerHTML = `<span style="transform: skew(${angle - 90}deg) rotate(${angle / 2}deg)">${prizes[index]}</span>`;
+                section.style.clipPath = `polygon(0 0, 100% 0, 100% 100%)`;
+                wheel.appendChild(section);
+                currentAngle += angle;
+            });
+
+            const spinButton = document.getElementById('spinButton');
+            spinButton.addEventListener('click', spinWheel);
+        }
+
+        function spinWheel() {
+            const wheel = document.getElementById('luckyWheel');
+            const spinButton = document.getElementById('spinButton');
+            spinButton.disabled = true;
+
+            const randomDegrees = Math.floor(Math.random() * 360) + 2160;
+            wheel.style.transform = `rotate(${randomDegrees}deg)`;
+
+            const particleContainer = document.createElement('div');
+            particleContainer.style.position = 'absolute';
+            particleContainer.style.width = '100%';
+            particleContainer.style.height = '100%';
+            particleContainer.style.pointerEvents = 'none';
+            wheel.appendChild(particleContainer);
+
+            const particleCount = 50;
+            const particles = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '5px';
+                particle.style.height = '5px';
+                particle.style.backgroundColor = '#0ff';
+                particle.style.borderRadius = '50%';
+                particles.push(particle);
+                particleContainer.appendChild(particle);
+            }
+
+            function animateParticles() {
+                particles.forEach((particle) => {
+                    const x = Math.random() * 300 - 150;
+                    const y = Math.random() * 300 - 150;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                    particle.style.opacity = Math.random();
+                });
+                if (spinButton.disabled) {
+                    requestAnimationFrame(animateParticles);
+                } else {
+                    particleContainer.remove();
+                }
+            }
+
+            animateParticles();
+
+            setTimeout(() => {
+                const actualRotation = randomDegrees % 360;
+                const prizes = ['100 Hash/hr', '100 TON Score', '5 TON', '50 Hash/hr', '2 Lucky Cards', '4 Lucky Cards'];
+                const probabilities = [15, 5, 25, 25, 20, 15];
+                
+                let cumulativeProb = 0;
+                let winningIndex = 0;
+                for (let i = 0; i < probabilities.length; i++) {
+                    cumulativeProb += probabilities[i];
+                    if (actualRotation <= (cumulativeProb / 100) * 360) {
+                        winningIndex = i;
+                        break;
+                    }
+                }
+                
+                const result = prizes[winningIndex];
+
+                setTimeout(() => {
+                    alert(`You won: ${result}`);
+                    spinButton.disabled = false;
+                    hasCard = false;
+                    document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 0`;
+                    
+                    switch(winningIndex) {
+                        case 0:
+                            autoHashRate += 100;
+                            updateAutoHashDisplay();
+                            break;
+                        case 1:
+                            tonScore += 100;
+                            updateTonScore();
+                            break;
+                        case 2:
+                            tonMined += 5;
+                            updateMiningStats();
+                            updateTonScore();
+                            break;
+                        case 3:
+                            autoHashRate += 50;
+                            updateAutoHashDisplay();
+                            break;
+                        case 4:
+                            hasCard = true;
+                            document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 2`;
+                            break;
+                        case 5:
+                            hasCard = true;
+                            document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 4`;
+                            break;
+                    }
+                }, 500);
+            }, 5000);
         }
 
         function showWithdraw() {
-            showModal("Withdraw", `Available balance: ${tonMined.toFixed(6)} TON\nMinimum withdrawal: 1 TON`);
+            showModal("Withdraw", `Available balance: ${tonMined.toFixed(3)} TON<br>Minimum withdrawal: 1 TON`);
         }
 
-        // Close the modal if clicked outside of it
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
+
+        updateAutoHashDisplay();
     </script>
 </body>
 </html>
