@@ -12,10 +12,11 @@
             background-color: #000;
             color: #0ff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .quantum-button {
@@ -30,6 +31,7 @@
             cursor: pointer;
             overflow: hidden;
             transition: all 0.5s ease;
+            margin-bottom: 30px;
         }
 
         .quantum-button:hover {
@@ -79,24 +81,14 @@
         }
 
         @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         #particleCanvas {
@@ -107,6 +99,63 @@
             height: 100%;
             z-index: -1;
         }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            background-color: rgba(0, 255, 255, 0.1);
+            border: 2px solid #0ff;
+            color: #0ff;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .action-button:hover {
+            background-color: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #000;
+            border: 2px solid #0ff;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .close-button {
+            color: #0ff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #00cccc;
+        }
     </style>
 </head>
 <body>
@@ -116,6 +165,20 @@
         <div class="button-content">
             <p class="button-text">Quantum TON</p>
             <p class="mining-status" id="miningStatus">Tap to Mine</p>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="action-button" id="taskButton">Daily Task</button>
+        <button class="action-button" id="luckyDrawButton">Lucky Draw</button>
+        <button class="action-button" id="withdrawButton">Withdraw</button>
+    </div>
+
+    <div id="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalContent"></p>
         </div>
     </div>
 
@@ -143,8 +206,16 @@
         let tonMined = 0;
         const miningButton = document.getElementById('miningButton');
         const miningStatus = document.getElementById('miningStatus');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const closeButton = document.querySelector('.close-button');
 
         miningButton.addEventListener('click', mine);
+        document.getElementById('taskButton').addEventListener('click', showDailyTask);
+        document.getElementById('luckyDrawButton').addEventListener('click', showLuckyDraw);
+        document.getElementById('withdrawButton').addEventListener('click', showWithdraw);
+        closeButton.addEventListener('click', closeModal);
 
         function mine() {
             totalHashes++;
@@ -162,6 +233,36 @@
             setTimeout(() => {
                 miningButton.style.animation = 'none';
             }, 500);
+        }
+
+        function showModal(title, content) {
+            modalTitle.textContent = title;
+            modalContent.textContent = content;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function showDailyTask() {
+            showModal("Daily Task", "Complete 1000 hashes today to earn a bonus of 0.01 TON!");
+        }
+
+        function showLuckyDraw() {
+            const prize = Math.random() < 0.1 ? "0.1 TON" : "Try again tomorrow!";
+            showModal("Lucky Draw", `You won: ${prize}`);
+        }
+
+        function showWithdraw() {
+            showModal("Withdraw", `Available balance: ${tonMined.toFixed(6)} TON\nMinimum withdrawal: 1 TON`);
+        }
+
+        // Close the modal if clicked outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
         }
     </script>
 </body>
