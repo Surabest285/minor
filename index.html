@@ -1,748 +1,798 @@
-<html><head><base href="https://futuristic-ton-miner.app/">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum TON Miner - Next-Gen Cryptocurrency Mining</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+<html><head><base href="https://instagram.clone/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entena</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #000000; /* Deep black */
+    --secondary-color: #0a0000; /* Very dark red, almost black */
+    --border-color: #4a0000; /* Dark red */
+    --text-color: #ffffff; /* Already white, no change needed */
+    --link-color: #ffffff; /* Changed to white */
+    --like-color: #ffffff; /* Changed to white */
+    --accent-color: #cc0000; /* Dark red, no change needed */
+  }
 
-        body {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #0ff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        .quantum-button {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background-color: rgba(0, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            margin-bottom: 30px;
-        }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+  }
 
-        .quantum-button:hover {
-            box-shadow: 0 0 50px #0ff;
-        }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-        .quantum-button::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                transparent,
-                rgba(0, 255, 255, 0.3),
-                transparent 30%
-            );
-            animation: rotate 4s linear infinite;
-        }
+  header {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 
-        .quantum-button::after {
-            content: '';
-            position: absolute;
-            inset: 5px;
-            background: #000;
-            border-radius: 50%;
-            z-index: 1;
-        }
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+  }
 
-        .button-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
 
-        .button-text {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
-            text-shadow: 0 0 10px #0ff;
-        }
+  .nav-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Increased from 12px to 16px for better spacing */
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(10, 0, 0, 0.9); /* Darker, more opaque background */
+    padding: 16px; /* Increased from 12px to 16px for better spacing */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); /* Red glow */
+  }
 
-        .mining-status {
-            font-size: 18px;
-            margin-top: 10px;
-        }
+  .left-icons {
+    left: 5%; /* Move closer to the middle horizontally */
+    top: 100px; /* Move up vertically */
+    transform: none; /* Remove vertical centering */
+  }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+  .right-icons {
+    right: 20%;
+    top: 50%; /* Adjusted from 55% to 50% to align with the left icons */
+    transform: translateY(-50%);
+  }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px; /* Reduced from 35px */
+    height: 32px; /* Reduced from 35px */
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 5px rgba(255, 0, 0, 0.3); /* Red shadow */
+  }
 
-        #particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+  .nav-icon {
+    font-size: 16px; /* Reduced from 18px */
+    color: var(--text-color); /* Changed to use text-color (white) */
+    cursor: pointer;
+  }
 
-        .action-buttons {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-        }
+  main {
+    margin-top: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
-        .action-button {
-            background-color: rgba(0, 255, 255, 0.1);
-            border: 2px solid #0ff;
-            color: #0ff;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Orbitron', sans-serif;
-        }
+  .stories {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 700px;
+  }
 
-        .action-button:hover {
-            background-color: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 15px #0ff;
-        }
+  .story-list {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
 
-        #modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-        }
+  .story-list::-webkit-scrollbar {
+    display: none;
+  }
 
-        .modal-content {
-            background-color: #000;
-            border: 2px solid #0ff;
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-        }
+  .story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
 
-        .close-button {
-            color: #0ff;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+  .story-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 40%;
+    background: linear-gradient(45deg, var(--like-color), var(--accent-color));
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-        .close-button:hover {
-            color: #00cccc;
-        }
+  .story-avatar img {
+    width: 114px;
+    height: 114px;
+    border-radius: 38%;
+    border: 2px solid var(--secondary-color);
+    object-fit: cover;
+  }
 
-        #luckyWheel {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
-            background: #000; /* Changed to black */
-            box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
-        }
+  .story-username {
+    font-size: 14px;
+    margin-top: 8px;
+    text-align: center;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
 
-        .wheel-section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: 100% 100%;
-            left: 50%;
-            top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-left: 2px solid #0ff; /* Added blue border */
-        }
+  .posts {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-        .wheel-section span {
-            display: inline-block;
-            transform-origin: center;
-            font-size: 12px;
-            text-align: center;
-            padding: 5px;
-            color: #0ff; /* Changed text color to blue */
-            text-shadow: 0 0 2px #fff, 0 0 5px #0ff; /* Added glow effect */
-        }
+  .post {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 24px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Red glow */
+  }
 
-        #spinButton {
-            margin-top: 20px;
-            background-color: rgba(0, 255, 255, 0.2);
-            border: 2px solid #0ff;
-            color: #0ff;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 10px #0ff;
-        }
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+  }
 
-        #spinButton:hover {
-            background-color: rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 20px #0ff;
-        }
+  .post-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-        #spinButton:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+  .post-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
 
-        #tonScoreDisplay {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 18px;
-            background-color: rgba(0, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #0ff;
-            box-shadow: 0 0 10px #0ff;
-        }
+  .post-username {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
 
-        #autoHashDisplay {
-            position: fixed;
-            top: 60px;
-            left: 20px;
-            font-size: 18px;
-            background-color: rgba(0, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #0ff;
-            box-shadow: 0 0 10px #0ff;
-        }
+  .post-options {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
 
-        #quizContainer {
-            display: none;
-        }
-        
-        .task-options {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
+  .post-content {
+    width: 100%;
+    height: 614px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--text-color); /* Changed to use text-color (white) */
+    text-align: center;
+    padding: 20px;
+    line-height: 1.4;
+  }
 
-        .task-option {
-            background-color: rgba(0, 255, 255, 0.1);
-            border: 2px solid #0ff;
-            color: #0ff;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Orbitron', sans-serif;
-        }
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
 
-        .task-option:hover {
-            background-color: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 15px #0ff;
-        }
+  .post-action-icons {
+    display: flex;
+    gap: 16px;
+  }
 
-        #gameCanvas {
-            border: 2px solid #0ff;
-            margin-top: 20px;
-        }
-    </style>
+  .post-action-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
+
+  .post-likes {
+    padding: 0 16px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
+
+  .post-caption {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+
+  .post-caption-username {
+    font-weight: 600;
+    color: var(--text-color); /* Changed to use text-color (white) */
+  }
+
+  .post-comments {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+
+  .post-comment {
+    font-size: 14px;
+  }
+
+  .post-time {
+    padding: 0 16px;
+    font-size: 10px;
+    color: var(--text-color); /* Changed to use text-color (white) */
+    margin-bottom: 16px;
+  }
+
+  .post-add-comment {
+    display: flex;
+    border-top: 1px solid var(--border-color);
+    padding: 16px;
+  }
+
+  .comment-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: transparent;
+    color: var(--text-color);
+  }
+
+  .comment-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .post-button {
+    color: var(--text-color); /* Changed to use text-color (white) */
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .schools-list {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 80px; /* Increased from 20px to 80px to move it away from the edge */
+    transform: translateY(-50%);
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1001;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Added a subtle red glow */
+    max-width: 200px; /* Add max-width to limit the size */
+  }
+
+  .schools-list h2 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+  }
+
+  .schools-list ul {
+    list-style-type: none;
+  }
+
+  .schools-list li {
+    color: var(--text-color);
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+
+  #schools-home-page {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: none;
+  }
+
+  #schools-home-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #schools-home-page main {
+    margin-top: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  #selected-school-info {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  #back-to-main {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #chat-page {
+    background-color: var(--primary-color);
+    min-height: 100vh;
+  }
+
+  .chat-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 20px;
+    background-color: var(--secondary-color);
+  }
+
+  .chat-input input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+  }
+
+  .chat-input button {
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    max-width: 70%;
+  }
+
+  .message.sent {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    align-self: flex-end;
+    margin-left: auto;
+  }
+
+  .message.received {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    align-self: flex-start;
+  }
+
+  @media (max-width: 1200px) {
+    .left-icons {
+      left: 5%;
+      top: 100px;
+    }
+
+    .right-icons {
+      right: 15%;
+      top: 50%; /* Added to maintain consistency across screen sizes */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .left-icons {
+      left: 5%;
+      top: 90px; /* Slightly adjusted for smaller screens */
+    }
+
+    .right-icons {
+      right: 10px;
+      top: 55%; /* Added to maintain consistency across screen sizes */
+    }
+
+    .schools-list {
+      right: 60px;
+      max-width: 180px;
+    }
+
+    .left-icons {
+      left: 10px;
+      top: 90px; /* Adjusted from 70px to 90px */
+    }
+  
+    .right-icons {
+      right: 10px;
+    }
+
+    .logo {
+      font-size: 20px;
+    }
+
+    .post-content {
+      font-size: 28px;
+      height: 400px;
+    }
+
+    .story-avatar {
+      width: 100px;
+      height: 100px;
+    }
+
+    .story-avatar img {
+      width: 94px;
+      height: 94px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .schools-list {
+      right: 10px;
+      left: 10px;
+      max-width: none;
+      width: auto;
+    }
+
+    .nav-icons {
+      flex-direction: row;
+      bottom: 0;
+      top: auto;
+      left: 0;
+      right: 0;
+      transform: none;
+      justify-content: space-around;
+      background-color: var(--secondary-color);
+      border-top: 1px solid var(--border-color);
+      border-radius: 0;
+      padding: 10px;
+      gap: 16px; /* Adjusted to maintain consistent spacing on mobile */
+    }
+
+    .left-icons {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      top: auto;
+      transform: none;
+      width: 40%; /* Adjusted from 50% to 40% to account for fewer icons */
+      justify-content: flex-start;
+    }
+
+    .icon-wrapper {
+      width: 32px; /* Adjusted to match the new size */
+      height: 32px; /* Adjusted to match the new size */
+    }
+
+    .nav-icon {
+      font-size: 16px; /* Adjusted to match the new size */
+    }
+
+    .right-icons {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      top: auto;
+      transform: none;
+      width: 60%; /* Adjusted from 50% to 60% to balance with left icons */
+      justify-content: flex-end;
+    }
+  }
+</style>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo">Entena</h1>
+      </div>
+    </div>
+  </header>
 
-    <div id="tonScoreDisplay">TON Score: <span id="tonScoreValue">0.000</span></div>
-    <div id="autoHashDisplay">Auto Hash: <span id="autoHashValue">1.0</span> per hour</div>
+  <div class="nav-icons left-icons">
+    <div class="icon-wrapper"><i class="fas fa-home nav-icon"></i></div>
+    <div class="icon-wrapper"><i class="fas fa-comment nav-icon"></i></div>
+  </div>
 
-    <div class="quantum-button" id="miningButton">
-        <div class="button-content">
-            <p class="button-text">Quantum TON</p>
-            <p class="mining-status" id="miningStatus">Tap to Mine</p>
+  <div class="nav-icons right-icons">
+    <div class="icon-wrapper"><i class="fas fa-school nav-icon"></i></div>
+    <div class="icon-wrapper"><i class="fas fa-video nav-icon"></i></div>
+    <div class="icon-wrapper"><i class="far fa-compass nav-icon"></i></div>
+    <div class="icon-wrapper"><i class="far fa-heart nav-icon"></i></div>
+    <div class="icon-wrapper"><img src="https://via.placeholder.com/150" alt="Profile" class="nav-icon" style="width: 22px; height: 22px; border-radius: 50%;"></div>
+  </div>
+
+  <main class="container">
+    <section class="stories">
+      <div class="story-list">
+        <div class="story">
+          <div class="story-avatar">
+            <img src="https://via.placeholder.com/120" alt="User">
+          </div>
+          <span class="story-username">Gossip 1</span>
         </div>
-    </div>
-
-    <div class="action-buttons">
-        <button class="action-button" id="taskButton">Daily Task</button>
-        <button class="action-button" id="luckyDrawButton">Lucky Draw</button>
-        <button class="action-button" id="withdrawButton">Withdraw</button>
-    </div>
-
-    <div id="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <div id="modalContent"></div>
+        <div class="story">
+          <div class="story-avatar">
+            <img src="https://via.placeholder.com/120" alt="User">
+          </div>
+          <span class="story-username">Gossip 2</span>
         </div>
+        <div class="story">
+          <div class="story-avatar">
+            <img src="https://via.placeholder.com/120" alt="User">
+          </div>
+          <span class="story-username">Gossip 3</span>
+        </div>
+        <div class="story">
+          <div class="story-avatar">
+            <img src="https://via.placeholder.com/120" alt="User">
+          </div>
+          <span class="story-username">Gossip 4</span>
+        </div>
+        <div class="story">
+          <div class="story-avatar">
+            <img src="https://via.placeholder.com/120" alt="User">
+          </div>
+          <span class="story-username">Gossip 5</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="posts">
+      <article class="post">
+        <div class="post-header">
+          <div class="post-user">
+            <img src="https://via.placeholder.com/32" alt="User" class="post-avatar">
+            <span class="post-username">username</span>
+          </div>
+          <i class="fas fa-ellipsis-h post-options"></i>
+        </div>
+        <div class="post-content">
+          Entena zare behelmu mariyan ayto tenesa
+        </div>
+        <div class="post-actions">
+          <div class="post-action-icons">
+            <i class="far fa-heart post-action-icon"></i>
+            <i class="far fa-comment post-action-icon"></i>
+          </div>
+          <i class="far fa-bookmark post-action-icon"></i>
+        </div>
+        <div class="post-likes">1,234 likes</div>
+        <div class="post-caption">
+          <span class="post-caption-username">username</span> This is a sample caption for the post.
+        </div>
+        <div class="post-comments">
+          <div class="post-comment">
+            <span class="post-comment-username">commenter</span> This is a sample comment.
+          </div>
+        </div>
+        <div class="post-time">2 HOURS AGO</div>
+        <div class="post-add-comment">
+          <input type="text" placeholder="Add a comment..." class="comment-input">
+          <span class="post-button">Post</span>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="schools-list" class="schools-list">
+    <h2>Schools</h2>
+    <ul>
+      <li>Entena High School</li>
+      <li>Mariyan Academy</li>
+      <li>Zare Elementary</li>
+      <li>Behelmu University</li>
+      <li>Ayto College</li>
+    </ul>
+  </div>
+
+  <div id="schools-home-page">
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1 class="logo">Entena Schools</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="nav-icons left-icons">
+      <div class="icon-wrapper"><i class="fas fa-home nav-icon"></i></div>
+      <div class="icon-wrapper"><i class="fas fa-comment nav-icon"></i></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        let totalHashes = 0;
-        let tonMined = 0;
-        let tonScore = 0;
-        let autoHashRate = 1;
-        let lastGamePlayTime = 0;
-        let hasCard = false;
-        const miningButton = document.getElementById('miningButton');
-        const miningStatus = document.getElementById('miningStatus');
-        const autoHashDisplay = document.getElementById('autoHashValue');
-        const tonScoreDisplay = document.getElementById('tonScoreValue');
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-        const closeButton = document.querySelector('.close-button');
+    <div class="nav-icons right-icons">
+      <div class="icon-wrapper"><i class="fas fa-school nav-icon"></i></div>
+      <div class="icon-wrapper"><i class="fas fa-video nav-icon"></i></div>
+      <div class="icon-wrapper"><i class="far fa-compass nav-icon"></i></div>
+      <div class="icon-wrapper"><i class="far fa-heart nav-icon"></i></div>
+      <div class="icon-wrapper"><img src="https://via.placeholder.com/150" alt="Profile" class="nav-icon" style="width: 22px; height: 22px; border-radius: 50%;"></div>
+    </div>
 
-        miningButton.addEventListener('click', mine);
-        document.getElementById('taskButton').addEventListener('click', showDailyTask);
-        document.getElementById('luckyDrawButton').addEventListener('click', showLuckyDraw);
-        document.getElementById('withdrawButton').addEventListener('click', showWithdraw);
-        closeButton.addEventListener('click', closeModal);
+    <main class="container">
+      <section id="selected-school-info">
+        <!-- School information will be dynamically inserted here -->
+      </section>
+      <button id="back-to-main">Back to Main Page</button>
+    </main>
+  </div>
 
-        function mine() {
-            totalHashes++;
-            tonMined = totalHashes / 1000; // 1000 hashes = 1 TON
-            updateMiningStats();
-            updateTonScore();
-            animateButton();
+  <div id="chat-page" style="display: none;">
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1 class="logo">Entena Chat</h1>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div id="chat-container" class="chat-container">
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="chat-message-input" placeholder="Type a message...">
+          <button id="send-message">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.post-action-icon').forEach(icon => {
+      icon.addEventListener('click', function() {
+        this.classList.toggle('fas');
+        this.classList.toggle('far');
+        if (this.classList.contains('fa-heart')) {
+          this.style.color = this.classList.contains('fas') ? 'var(--like-color)' : '';
         }
+      });
+    });
 
-        function autoHash() {
-            totalHashes += autoHashRate / 3600;
-            tonMined = totalHashes / 1000;
-            updateMiningStats();
-            updateTonScore();
-            updateAutoHashDisplay();
-        }
+    const schoolIcon = document.querySelector('.fa-school');
+    const schoolsList = document.getElementById('schools-list');
+    const mainContent = document.querySelector('main');
+    const schoolsHomePage = document.getElementById('schools-home-page');
+    const backToMainButton = document.getElementById('back-to-main');
+    const selectedSchoolInfo = document.getElementById('selected-school-info');
+    const chatIcon = document.querySelector('.left-icons .fa-comment');
+    const chatPage = document.getElementById('chat-page');
 
-        setInterval(autoHash, 1000);
+    schoolIcon.addEventListener('click', function() {
+      schoolsList.style.display = schoolsList.style.display === 'none' ? 'block' : 'none';
+    });
 
-        function updateMiningStats() {
-            miningStatus.textContent = `${totalHashes.toLocaleString()} Hashes\n${tonMined.toFixed(3)} TON`;
-        }
+    document.querySelectorAll('#schools-list li').forEach(school => {
+      school.addEventListener('click', function() {
+        const schoolName = this.textContent;
+        mainContent.style.display = 'none';
+        schoolsList.style.display = 'none';
+        schoolsHomePage.style.display = 'block';
+        selectedSchoolInfo.innerHTML = `
+          <h3>${schoolName}</h3>
+          <p>Welcome to the home page of ${schoolName}. Here you can find information about our programs, faculty, and upcoming events.</p>
+        `;
+      });
+    });
 
-        function updateTonScore() {
-            tonScore = tonMined;
-            tonScoreDisplay.textContent = tonScore.toFixed(3);
-        }
+    backToMainButton.addEventListener('click', function() {
+      mainContent.style.display = 'flex';
+      schoolsHomePage.style.display = 'none';
+    });
 
-        function updateAutoHashDisplay() {
-            autoHashDisplay.textContent = autoHashRate.toFixed(1);
-        }
+    const homeIcon = document.querySelector('.fa-home');
 
-        function animateButton() {
-            miningButton.style.animation = 'pulse 0.5s ease-out';
-            setTimeout(() => {
-                miningButton.style.animation = 'none';
-            }, 500);
-        }
+    homeIcon.addEventListener('click', function() {
+      mainContent.style.display = 'flex';
+      schoolsHomePage.style.display = 'none';
+      chatPage.style.display = 'none';
+    });
 
-        function showModal(title, content) {
-            modalTitle.textContent = title;
-            modalContent.innerHTML = content;
-            modal.style.display = 'flex';
-        }
+    chatIcon.addEventListener('click', () => {
+      mainContent.style.display = 'none';
+      schoolsHomePage.style.display = 'none';
+      chatPage.style.display = 'block';
+    });
 
-        function closeModal() {
-            modal.style.display = 'none';
-        }
+    function addMessage(message, isSent) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.classList.add(isSent ? 'sent' : 'received');
+      messageElement.textContent = message;
+      document.getElementById('chat-messages').appendChild(messageElement);
+      const chatMessages = document.getElementById('chat-messages');
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
-        function generateQuizQuestions() {
-            const questions = [
-                { question: "What is the capital of France?", options: ["London", "Berlin", "Paris", "Madrid"], correct: 2 },
-                { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], correct: 1 },
-                { question: "Who painted the Mona Lisa?", options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"], correct: 1 },
-                { question: "What is the largest planet in our solar system?", options: ["Mars", "Jupiter", "Saturn", "Earth"], correct: 1 },
-                { question: "What is the chemical symbol for gold?", options: ["Go", "Gd", "Au", "Ag"], correct: 2 },
-                { question: "Which country is known as the Land of the Rising Sun?", options: ["China", "Korea", "Japan", "Thailand"], correct: 2 },
-                { question: "What is the smallest prime number?", options: ["0", "1", "2", "3"], correct: 2 },
-                { question: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], correct: 1 },
-                { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Perth"], correct: 2 },
-                { question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
-                { question: "What is the largest organ in the human body?", options: ["Heart", "Brain", "Liver", "Skin"], correct: 3 },
-                { question: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Joseph Lister"], correct: 1 },
-                { question: "What is the capital of Canada?", options: ["Toronto", "Vancouver", "Montreal", "Ottawa"], correct: 3 },
-                { question: "Which element has the chemical symbol 'O'?", options: ["Osmium", "Oxygen", "Oganesson", "Olivine"], correct: 1 },
-                { question: "What is the largest ocean on Earth?", options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], correct: 3 },
-                { question: "Who is known as the father of modern physics?", options: ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Niels Bohr"], correct: 1 },
-                { question: "What is the currency of Japan?", options: ["Yuan", "Won", "Yen", "Ringgit"], correct: 2 },
-                { question: "Which planet is closest to the Sun?", options: ["Venus", "Mars", "Mercury", "Earth"], correct: 2 },
-                { question: "What is the capital of Brazil?", options: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"], correct: 2 },
-                { question: "Who painted 'The Starry Night'?", options: ["Pablo Picasso", "Claude Monet", "Vincent van Gogh", "Leonardo da Vinci"], correct: 2 }
-            ];
-            return questions;
-        }
+    document.getElementById('send-message').addEventListener('click', () => {
+      const message = document.getElementById('chat-message-input').value.trim();
+      if (message) {
+        addMessage(message, true);
+        document.getElementById('chat-message-input').value = '';
+        
+        // Simulate a received message after a short delay
+        setTimeout(() => {
+          addMessage('This is a demo response.', false);
+        }, 1000);
+      }
+    });
 
-        function startQuiz() {
-            const quizContainer = document.getElementById('quizContainer');
-            const startQuizButton = document.getElementById('startQuizButton');
-            quizContainer.style.display = 'block';
-            startQuizButton.style.display = 'none';
-
-            const questions = generateQuizQuestions();
-            let currentQuestionIndex = 0;
-            let score = 0;
-
-            function displayQuestion() {
-                const questionText = document.getElementById('questionText');
-                const answerOptions = document.getElementById('answerOptions');
-                const currentQuestion = questions[currentQuestionIndex];
-
-                questionText.textContent = currentQuestion.question;
-                answerOptions.innerHTML = '';
-
-                currentQuestion.options.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.classList.add('action-button');
-                    button.addEventListener('click', () => checkAnswer(index));
-                    answerOptions.appendChild(button);
-                });
-
-                document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
-                document.getElementById('currentScore').textContent = score;
-            }
-
-            function checkAnswer(selectedIndex) {
-                const currentQuestion = questions[currentQuestionIndex];
-                if (selectedIndex === currentQuestion.correct) {
-                    score++;
-                }
-
-                currentQuestionIndex++;
-
-                if (currentQuestionIndex < questions.length) {
-                    displayQuestion();
-                } else {
-                    finishQuiz();
-                }
-            }
-
-            function finishQuiz() {
-                quizContainer.innerHTML = `<p>Quiz completed! Your score: ${score}/20</p>`;
-                autoHashRate += score;
-                updateAutoHashDisplay();
-                alert(`Congratulations! Your auto hash rate has increased by ${score}!`);
-                closeModal();
-                lastGamePlayTime = Date.now();
-            }
-
-            displayQuestion();
-        }
-
-        function showQuizContent() {
-            const quizContent = `
-                <h3>Daily Quiz Challenge</h3>
-                <p>Answer 20 questions to increase your auto hash rate!</p>
-                <div id="quizContainer" style="display:none;">
-                    <p id="questionText"></p>
-                    <div id="answerOptions"></div>
-                    <p id="quizProgress">Question <span id="currentQuestion">1</span>/20</p>
-                    <p id="quizScore">Score: <span id="currentScore">0</span></p>
-                </div>
-                <button id="startQuizButton" class="action-button">Start Quiz</button>
-            `;
-            document.getElementById('taskContent').innerHTML = quizContent;
-            document.getElementById('startQuizButton').addEventListener('click', startQuiz);
-        }
-
-        function showDailyTask() {
-            const currentTime = Date.now();
-            const timeElapsed = (currentTime - lastGamePlayTime) / (1000 * 60 * 60); // hours
-            const canPlay = timeElapsed >= 24 || lastGamePlayTime === 0;
-
-            let content = `
-                <h3>Daily Task</h3>
-                <div class="task-options">
-                    <button class="task-option" id="quizOption">Quiz</button>
-                    <button class="task-option" id="joinOption">Join</button>
-                    <button class="task-option" id="gameOption">Game</button>
-                </div>
-                <div id="taskContent"></div>
-            `;
-
-            showModal("Daily Task", content);
-
-            if (canPlay) {
-                document.getElementById('quizOption').addEventListener('click', showQuizContent);
-                document.getElementById('joinOption').addEventListener('click', showJoinContent);
-                document.getElementById('gameOption').addEventListener('click', showGameContent);
-            } else {
-                const hoursLeft = Math.ceil(24 - timeElapsed);
-                document.getElementById('taskContent').innerHTML = `<p>You can play again in ${hoursLeft} hours.</p>`;
-            }
-        }
-
-        function showJoinContent() {
-            const joinContent = `
-                <h3>Join Telegram Channels</h3>
-                <p>Join our Telegram channels to receive 100 TON scores!</p>
-                <ul>
-                    <li><a href="https://t.me/toncoin" target="_blank">TON Community</a></li>
-                    <li><a href="https://t.me/tondev" target="_blank">TON Developers</a></li>
-                    <li><a href="https://t.me/tonstats" target="_blank">TON Stats</a></li>
-                </ul>
-                <button id="claimJoinReward" class="action-button">Claim Reward</button>
-            `;
-            document.getElementById('taskContent').innerHTML = joinContent;
-            document.getElementById('claimJoinReward').addEventListener('click', claimJoinReward);
-        }
-
-        function claimJoinReward() {
-            tonScore += 100;
-            updateTonScore();
-            alert("You've received 100 TON scores for joining our Telegram channels!");
-            closeModal();
-        }
-
-        function showGameContent() {
-            const gameContent = `
-                <h3>Card Catcher Game</h3>
-                <p>Catch the falling cards to earn a Lucky Draw card!</p>
-                <canvas id="gameCanvas" width="300" height="400"></canvas>
-                <button id="startGameButton" class="action-button">Start Game</button>
-            `;
-            document.getElementById('taskContent').innerHTML = gameContent;
-            document.getElementById('startGameButton').addEventListener('click', startCardGame);
-        }
-
-        function startCardGame() {
-            const canvas = document.getElementById('gameCanvas');
-            const ctx = canvas.getContext('2d');
-            let cardY = 0;
-            let cardX = Math.random() * (canvas.width - 50);
-            let basketX = canvas.width / 2 - 25;
-            let score = 0;
-            let gameInterval;
-            let cardSpeed = 2;
-
-            document.getElementById('startGameButton').style.display = 'none';
-
-            function drawCard() {
-                ctx.fillStyle = '#0ff';
-                ctx.fillRect(cardX, cardY, 50, 75);
-            }
-
-            function drawBasket() {
-                ctx.fillStyle = '#0ff';
-                ctx.fillRect(basketX, canvas.height - 20, 50, 20);
-            }
-
-            function updateGame() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                cardY += cardSpeed;
-
-                if (cardY > canvas.height) {
-                    cardY = 0;
-                    cardX = Math.random() * (canvas.width - 50);
-                    cardSpeed = Math.min(cardSpeed + 0.5, 8);
-                }
-
-                if (cardY + 75 >= canvas.height - 20 && cardX < basketX + 50 && cardX + 50 > basketX) {
-                    score++;
-                    cardY = 0;
-                    cardX = Math.random() * (canvas.width - 50);
-                    cardSpeed = Math.min(cardSpeed + 0.5, 8);
-                }
-
-                drawCard();
-                drawBasket();
-
-                ctx.fillStyle = '#0ff';
-                ctx.font = '20px Orbitron';
-                ctx.fillText(`Score: ${score}`, 10, 30);
-
-                if (score >= 15) {
-                    clearInterval(gameInterval);
-                    hasCard = true;
-                    alert("Congratulations! You've earned a Lucky Draw card!");
-                    closeModal();
-                }
-            }
-
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                basketX = e.clientX - rect.left - 25;
-            });
-
-            gameInterval = setInterval(updateGame, 20);
-        }
-
-        function showLuckyDraw() {
-            let wheelContent = `
-                <div id="luckyWheel"></div>
-                <button id="spinButton" class="action-button">Spin the Wheel</button>
-                <p id="cardStatus">Available Lucky Draw cards: ${hasCard ? 1 : 0}</p>
-            `;
-            
-            if (!hasCard) {
-                wheelContent += `<p>You need a Lucky Draw card to spin the wheel. Play the Card Catcher game to earn one!</p>`;
-            }
-
-            showModal("Lucky Draw", wheelContent);
-            createLuckyWheel();
-            
-            const spinButton = document.getElementById('spinButton');
-            spinButton.disabled = !hasCard;
-        }
-
-        function createLuckyWheel() {
-            const wheel = document.getElementById('luckyWheel');
-            const prizes = ['100 Hash/hr', '100 TON Score', '5 TON', '50 Hash/hr', '2 Lucky Cards', '4 Lucky Cards'];
-            const probabilities = [15, 5, 25, 25, 20, 15]; // Percentages
-            const colors = ['#000', '#000', '#000', '#000', '#000', '#000']; // Added to make the sections black
-            
-            let currentAngle = 0;
-            probabilities.forEach((prob, index) => {
-                const section = document.createElement('div');
-                section.className = 'wheel-section';
-                const angle = (prob / 100) * 360;
-                section.style.transform = `rotate(${currentAngle}deg) skew(${90 - angle}deg)`;
-                section.style.background = colors[index]; // Color changes to black
-                section.innerHTML = `<span style="transform: skew(${angle - 90}deg) rotate(${angle / 2}deg)">${prizes[index]}</span>`;
-                section.style.clipPath = `polygon(0 0, 100% 0, 100% 100%)`;
-                wheel.appendChild(section);
-                currentAngle += angle;
-            });
-
-            const spinButton = document.getElementById('spinButton');
-            spinButton.addEventListener('click', spinWheel);
-        }
-
-        function spinWheel() {
-            const wheel = document.getElementById('luckyWheel');
-            const spinButton = document.getElementById('spinButton');
-            spinButton.disabled = true;
-
-            const randomDegrees = Math.floor(Math.random() * 360) + 2160;
-            wheel.style.transform = `rotate(${randomDegrees}deg)`;
-
-            const particleContainer = document.createElement('div');
-            particleContainer.style.position = 'absolute';
-            particleContainer.style.width = '100%';
-            particleContainer.style.height = '100%';
-            particleContainer.style.pointerEvents = 'none';
-            wheel.appendChild(particleContainer);
-
-            const particleCount = 50;
-            const particles = [];
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'absolute';
-                particle.style.width = '5px';
-                particle.style.height = '5px';
-                particle.style.backgroundColor = '#0ff';
-                particle.style.borderRadius = '50%';
-                particles.push(particle);
-                particleContainer.appendChild(particle);
-            }
-
-            function animateParticles() {
-                particles.forEach((particle) => {
-                    const x = Math.random() * 300 - 150;
-                    const y = Math.random() * 300 - 150;
-                    particle.style.transform = `translate(${x}px, ${y}px)`;
-                    particle.style.opacity = Math.random();
-                });
-                if (spinButton.disabled) {
-                    requestAnimationFrame(animateParticles);
-                } else {
-                    particleContainer.remove();
-                }
-            }
-
-            animateParticles();
-
-            setTimeout(() => {
-                const actualRotation = randomDegrees % 360;
-                const prizes = ['100 Hash/hr', '100 TON Score', '5 TON', '50 Hash/hr', '2 Lucky Cards', '4 Lucky Cards'];
-                const probabilities = [15, 5, 25, 25, 20, 15];
-                
-                let cumulativeProb = 0;
-                let winningIndex = 0;
-                for (let i = 0; i < probabilities.length; i++) {
-                    cumulativeProb += probabilities[i];
-                    if (actualRotation <= (cumulativeProb / 100) * 360) {
-                        winningIndex = i;
-                        break;
-                    }
-                }
-                
-                const result = prizes[winningIndex];
-
-                setTimeout(() => {
-                    alert(`You won: ${result}`);
-                    spinButton.disabled = false;
-                    hasCard = false;
-                    document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 0`;
-                    
-                    switch(winningIndex) {
-                        case 0:
-                            autoHashRate += 100;
-                            updateAutoHashDisplay();
-                            break;
-                        case 1:
-                            tonScore += 100;
-                            updateTonScore();
-                            break;
-                        case 2:
-                            tonMined += 5;
-                            updateMiningStats();
-                            updateTonScore();
-                            break;
-                        case 3:
-                            autoHashRate += 50;
-                            updateAutoHashDisplay();
-                            break;
-                        case 4:
-                            hasCard = true;
-                            document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 2`;
-                            break;
-                        case 5:
-                            hasCard = true;
-                            document.getElementById('cardStatus').textContent = `Available Lucky Draw cards: 4`;
-                            break;
-                    }
-                }, 500);
-            }, 5000);
-        }
-
-        function showWithdraw() {
-            showModal("Withdraw", `Available balance: ${tonMined.toFixed(3)} TON<br>Minimum withdrawal: 1 TON`);
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        updateAutoHashDisplay();
-    </script>
+    document.getElementById('chat-message-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('send-message').click();
+      }
+    });
+  </script>
 </body>
 </html>
