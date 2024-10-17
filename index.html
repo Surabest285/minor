@@ -1,798 +1,128 @@
-<html><head><base href="https://instagram.clone/">
+<html><head><base href="https://myprofile.com/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entena</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<title>My Personal Profile</title>
 <style>
-  :root {
-    --primary-color: #000000; /* Deep black */
-    --secondary-color: #0a0000; /* Very dark red, almost black */
-    --border-color: #4a0000; /* Dark red */
-    --text-color: #ffffff; /* Already white, no change needed */
-    --link-color: #ffffff; /* Changed to white */
-    --like-color: #ffffff; /* Changed to white */
-    --accent-color: #cc0000; /* Dark red, no change needed */
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-  }
-
-  .container {
-    max-width: 1200px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
   }
-
   header {
-    background-color: var(--secondary-color);
-    border-bottom: 1px solid var(--border-color);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-  }
-
-  .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 54px;
-  }
-
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--text-color); /* Changed to use text-color (white) */
-  }
-
-  .nav-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* Increased from 12px to 16px for better spacing */
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(10, 0, 0, 0.9); /* Darker, more opaque background */
-    padding: 16px; /* Increased from 12px to 16px for better spacing */
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); /* Red glow */
-  }
-
-  .left-icons {
-    left: 5%; /* Move closer to the middle horizontally */
-    top: 100px; /* Move up vertically */
-    transform: none; /* Remove vertical centering */
-  }
-
-  .right-icons {
-    right: 20%;
-    top: 50%; /* Adjusted from 55% to 50% to align with the left icons */
-    transform: translateY(-50%);
-  }
-
-  .icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px; /* Reduced from 35px */
-    height: 32px; /* Reduced from 35px */
-    border-radius: 50%;
-    background-color: var(--secondary-color);
-    box-shadow: 0 2px 5px rgba(255, 0, 0, 0.3); /* Red shadow */
-  }
-
-  .nav-icon {
-    font-size: 16px; /* Reduced from 18px */
-    color: var(--text-color); /* Changed to use text-color (white) */
-    cursor: pointer;
-  }
-
-  main {
-    margin-top: 74px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .stories {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 24px;
-    margin-top: 40px;
-    width: 100%;
-    max-width: 700px;
-  }
-
-  .story-list {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .story-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .story {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .story-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 40%;
-    background: linear-gradient(45deg, var(--like-color), var(--accent-color));
-    padding: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .story-avatar img {
-    width: 114px;
-    height: 114px;
-    border-radius: 38%;
-    border: 2px solid var(--secondary-color);
-    object-fit: cover;
-  }
-
-  .story-username {
-    font-size: 14px;
-    margin-top: 8px;
+    background-color: #3498db;
+    color: white;
     text-align: center;
-    color: var(--text-color); /* Changed to use text-color (white) */
+    padding: 1em;
+    border-radius: 5px;
   }
-
-  .posts {
-    width: 100%;
-    max-width: 700px;
+  h1 {
+    margin-bottom: 0;
+  }
+  .tagline {
+    font-style: italic;
+    margin-top: 0;
+  }
+  .profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 20px auto;
+    display: block;
+    border: 5px solid #3498db;
+  }
+  section {
+    background-color: white;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #3498db;
+  }
+  .skills {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .post {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    margin-bottom: 24px;
-    width: 100%;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Red glow */
-  }
-
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-  }
-
-  .post-user {
-    display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
   }
-
-  .post-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+  .skill {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
   }
-
-  .post-username {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text-color); /* Changed to use text-color (white) */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
-
-  .post-options {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-color); /* Changed to use text-color (white) */
-  }
-
-  .post-content {
-    width: 100%;
-    height: 614px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-color);
-    font-size: 36px;
-    font-weight: bold;
-    color: var(--text-color); /* Changed to use text-color (white) */
-    text-align: center;
-    padding: 20px;
-    line-height: 1.4;
-  }
-
-  .post-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 16px;
-  }
-
-  .post-action-icons {
-    display: flex;
-    gap: 16px;
-  }
-
-  .post-action-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-color); /* Changed to use text-color (white) */
-  }
-
-  .post-likes {
-    padding: 0 16px;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: var(--text-color); /* Changed to use text-color (white) */
-  }
-
-  .post-caption {
-    padding: 0 16px;
-    margin-bottom: 8px;
-  }
-
-  .post-caption-username {
-    font-weight: 600;
-    color: var(--text-color); /* Changed to use text-color (white) */
-  }
-
-  .post-comments {
-    padding: 0 16px;
-    margin-bottom: 8px;
-  }
-
-  .post-comment {
-    font-size: 14px;
-  }
-
-  .post-time {
-    padding: 0 16px;
-    font-size: 10px;
-    color: var(--text-color); /* Changed to use text-color (white) */
-    margin-bottom: 16px;
-  }
-
-  .post-add-comment {
-    display: flex;
-    border-top: 1px solid var(--border-color);
-    padding: 16px;
-  }
-
-  .comment-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    background-color: transparent;
-    color: var(--text-color);
-  }
-
-  .comment-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .post-button {
-    color: var(--text-color); /* Changed to use text-color (white) */
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .schools-list {
-    display: none;
-    position: fixed;
-    top: 50%;
-    right: 80px; /* Increased from 20px to 80px to move it away from the edge */
-    transform: translateY(-50%);
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1001;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Added a subtle red glow */
-    max-width: 200px; /* Add max-width to limit the size */
-  }
-
-  .schools-list h2 {
-    color: var(--text-color);
-    margin-bottom: 10px;
-  }
-
-  .schools-list ul {
-    list-style-type: none;
-  }
-
-  .schools-list li {
-    color: var(--text-color);
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-
-  #schools-home-page {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    display: none;
-  }
-
-  #schools-home-page .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #schools-home-page main {
-    margin-top: 74px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  #selected-school-info {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 700px;
-  }
-
-  #back-to-main {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  #chat-page {
-    background-color: var(--primary-color);
-    min-height: 100vh;
-  }
-
-  .chat-container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .chat-messages {
-    height: calc(100vh - 200px);
-    overflow-y: auto;
-    padding: 20px;
-  }
-
-  .chat-input {
-    display: flex;
-    padding: 20px;
-    background-color: var(--secondary-color);
-  }
-
-  .chat-input input {
-    flex-grow: 1;
-    margin-right: 10px;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-  }
-
-  .chat-input button {
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    max-width: 70%;
-  }
-
-  .message.sent {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    align-self: flex-end;
-    margin-left: auto;
-  }
-
-  .message.received {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    align-self: flex-start;
-  }
-
-  @media (max-width: 1200px) {
-    .left-icons {
-      left: 5%;
-      top: 100px;
-    }
-
-    .right-icons {
-      right: 15%;
-      top: 50%; /* Added to maintain consistency across screen sizes */
-    }
-  }
-
-  @media (max-width: 768px) {
-    .left-icons {
-      left: 5%;
-      top: 90px; /* Slightly adjusted for smaller screens */
-    }
-
-    .right-icons {
-      right: 10px;
-      top: 55%; /* Added to maintain consistency across screen sizes */
-    }
-
-    .schools-list {
-      right: 60px;
-      max-width: 180px;
-    }
-
-    .left-icons {
-      left: 10px;
-      top: 90px; /* Adjusted from 70px to 90px */
-    }
-  
-    .right-icons {
-      right: 10px;
-    }
-
-    .logo {
-      font-size: 20px;
-    }
-
-    .post-content {
-      font-size: 28px;
-      height: 400px;
-    }
-
-    .story-avatar {
-      width: 100px;
-      height: 100px;
-    }
-
-    .story-avatar img {
-      width: 94px;
-      height: 94px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .schools-list {
-      right: 10px;
-      left: 10px;
-      max-width: none;
-      width: auto;
-    }
-
-    .nav-icons {
-      flex-direction: row;
-      bottom: 0;
-      top: auto;
-      left: 0;
-      right: 0;
-      transform: none;
-      justify-content: space-around;
-      background-color: var(--secondary-color);
-      border-top: 1px solid var(--border-color);
-      border-radius: 0;
-      padding: 10px;
-      gap: 16px; /* Adjusted to maintain consistent spacing on mobile */
-    }
-
-    .left-icons {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      top: auto;
-      transform: none;
-      width: 40%; /* Adjusted from 50% to 40% to account for fewer icons */
-      justify-content: flex-start;
-    }
-
-    .icon-wrapper {
-      width: 32px; /* Adjusted to match the new size */
-      height: 32px; /* Adjusted to match the new size */
-    }
-
-    .nav-icon {
-      font-size: 16px; /* Adjusted to match the new size */
-    }
-
-    .right-icons {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      top: auto;
-      transform: none;
-      width: 60%; /* Adjusted from 50% to 60% to balance with left icons */
-      justify-content: flex-end;
-    }
+  section {
+    animation: fadeIn 1s ease-in-out;
   }
 </style>
 </head>
 <body>
   <header>
-    <div class="container">
-      <div class="header-content">
-        <h1 class="logo">Entena</h1>
-      </div>
-    </div>
+    <h1>John Doe</h1>
+    <p class="tagline">Web Developer &amp; Designer</p>
   </header>
 
-  <div class="nav-icons left-icons">
-    <div class="icon-wrapper"><i class="fas fa-home nav-icon"></i></div>
-    <div class="icon-wrapper"><i class="fas fa-comment nav-icon"></i></div>
-  </div>
+  <img src="profile-pic.jpg" alt="John Doe smiling, wearing a blue shirt, professional headshot" class="profile-pic" width="200" height="200">
 
-  <div class="nav-icons right-icons">
-    <div class="icon-wrapper"><i class="fas fa-school nav-icon"></i></div>
-    <div class="icon-wrapper"><i class="fas fa-video nav-icon"></i></div>
-    <div class="icon-wrapper"><i class="far fa-compass nav-icon"></i></div>
-    <div class="icon-wrapper"><i class="far fa-heart nav-icon"></i></div>
-    <div class="icon-wrapper"><img src="https://via.placeholder.com/150" alt="Profile" class="nav-icon" style="width: 22px; height: 22px; border-radius: 50%;"></div>
-  </div>
+  <section>
+    <h2>About Me</h2>
+    <p>Hello! I'm John, a passionate web developer and designer with 5 years of experience creating beautiful, functional websites. I love turning complex problems into simple, elegant solutions.</p>
+  </section>
 
-  <main class="container">
-    <section class="stories">
-      <div class="story-list">
-        <div class="story">
-          <div class="story-avatar">
-            <img src="https://via.placeholder.com/120" alt="User">
-          </div>
-          <span class="story-username">Gossip 1</span>
-        </div>
-        <div class="story">
-          <div class="story-avatar">
-            <img src="https://via.placeholder.com/120" alt="User">
-          </div>
-          <span class="story-username">Gossip 2</span>
-        </div>
-        <div class="story">
-          <div class="story-avatar">
-            <img src="https://via.placeholder.com/120" alt="User">
-          </div>
-          <span class="story-username">Gossip 3</span>
-        </div>
-        <div class="story">
-          <div class="story-avatar">
-            <img src="https://via.placeholder.com/120" alt="User">
-          </div>
-          <span class="story-username">Gossip 4</span>
-        </div>
-        <div class="story">
-          <div class="story-avatar">
-            <img src="https://via.placeholder.com/120" alt="User">
-          </div>
-          <span class="story-username">Gossip 5</span>
-        </div>
-      </div>
-    </section>
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">
+      <span class="skill">HTML5</span>
+      <span class="skill">CSS3</span>
+      <span class="skill">JavaScript</span>
+      <span class="skill">React</span>
+      <span class="skill">Node.js</span>
+      <span class="skill">UI/UX Design</span>
+    </div>
+  </section>
 
-    <section class="posts">
-      <article class="post">
-        <div class="post-header">
-          <div class="post-user">
-            <img src="https://via.placeholder.com/32" alt="User" class="post-avatar">
-            <span class="post-username">username</span>
-          </div>
-          <i class="fas fa-ellipsis-h post-options"></i>
-        </div>
-        <div class="post-content">
-          Entena zare behelmu mariyan ayto tenesa
-        </div>
-        <div class="post-actions">
-          <div class="post-action-icons">
-            <i class="far fa-heart post-action-icon"></i>
-            <i class="far fa-comment post-action-icon"></i>
-          </div>
-          <i class="far fa-bookmark post-action-icon"></i>
-        </div>
-        <div class="post-likes">1,234 likes</div>
-        <div class="post-caption">
-          <span class="post-caption-username">username</span> This is a sample caption for the post.
-        </div>
-        <div class="post-comments">
-          <div class="post-comment">
-            <span class="post-comment-username">commenter</span> This is a sample comment.
-          </div>
-        </div>
-        <div class="post-time">2 HOURS AGO</div>
-        <div class="post-add-comment">
-          <input type="text" placeholder="Add a comment..." class="comment-input">
-          <span class="post-button">Post</span>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <div id="schools-list" class="schools-list">
-    <h2>Schools</h2>
+  <section>
+    <h2>Experience</h2>
+    <h3>Senior Web Developer - Tech Solutions Inc.</h3>
+    <p>2018 - Present</p>
     <ul>
-      <li>Entena High School</li>
-      <li>Mariyan Academy</li>
-      <li>Zare Elementary</li>
-      <li>Behelmu University</li>
-      <li>Ayto College</li>
+      <li>Lead a team of developers in creating responsive web applications</li>
+      <li>Implemented modern front-end frameworks to improve user experience</li>
+      <li>Optimized website performance, resulting in a 40% increase in load speed</li>
     </ul>
-  </div>
+  </section>
 
-  <div id="schools-home-page">
-    <header>
-      <div class="container">
-        <div class="header-content">
-          <h1 class="logo">Entena Schools</h1>
-        </div>
-      </div>
-    </header>
-
-    <div class="nav-icons left-icons">
-      <div class="icon-wrapper"><i class="fas fa-home nav-icon"></i></div>
-      <div class="icon-wrapper"><i class="fas fa-comment nav-icon"></i></div>
-    </div>
-
-    <div class="nav-icons right-icons">
-      <div class="icon-wrapper"><i class="fas fa-school nav-icon"></i></div>
-      <div class="icon-wrapper"><i class="fas fa-video nav-icon"></i></div>
-      <div class="icon-wrapper"><i class="far fa-compass nav-icon"></i></div>
-      <div class="icon-wrapper"><i class="far fa-heart nav-icon"></i></div>
-      <div class="icon-wrapper"><img src="https://via.placeholder.com/150" alt="Profile" class="nav-icon" style="width: 22px; height: 22px; border-radius: 50%;"></div>
-    </div>
-
-    <main class="container">
-      <section id="selected-school-info">
-        <!-- School information will be dynamically inserted here -->
-      </section>
-      <button id="back-to-main">Back to Main Page</button>
-    </main>
-  </div>
-
-  <div id="chat-page" style="display: none;">
-    <header>
-      <div class="container">
-        <div class="header-content">
-          <h1 class="logo">Entena Chat</h1>
-        </div>
-      </div>
-    </header>
-
-    <main class="container">
-      <div id="chat-container" class="chat-container">
-        <div id="chat-messages" class="chat-messages"></div>
-        <div class="chat-input">
-          <input type="text" id="chat-message-input" placeholder="Type a message...">
-          <button id="send-message">Send</button>
-        </div>
-      </div>
-    </main>
-  </div>
+  <section>
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:john.doe@email.com">john.doe@email.com</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/johndoe">linkedin.com/in/johndoe</a></p>
+    <p>GitHub: <a href="https://github.com/johndoe">github.com/johndoe</a></p>
+  </section>
 
   <script>
-    document.querySelectorAll('.post-action-icon').forEach(icon => {
-      icon.addEventListener('click', function() {
-        this.classList.toggle('fas');
-        this.classList.toggle('far');
-        if (this.classList.contains('fa-heart')) {
-          this.style.color = this.classList.contains('fas') ? 'var(--like-color)' : '';
-        }
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const sections = document.querySelectorAll('section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+          }
+        });
+      }, { threshold: 0.1 });
+
+      sections.forEach(section => {
+        section.style.opacity = 0;
+        observer.observe(section);
       });
-    });
-
-    const schoolIcon = document.querySelector('.fa-school');
-    const schoolsList = document.getElementById('schools-list');
-    const mainContent = document.querySelector('main');
-    const schoolsHomePage = document.getElementById('schools-home-page');
-    const backToMainButton = document.getElementById('back-to-main');
-    const selectedSchoolInfo = document.getElementById('selected-school-info');
-    const chatIcon = document.querySelector('.left-icons .fa-comment');
-    const chatPage = document.getElementById('chat-page');
-
-    schoolIcon.addEventListener('click', function() {
-      schoolsList.style.display = schoolsList.style.display === 'none' ? 'block' : 'none';
-    });
-
-    document.querySelectorAll('#schools-list li').forEach(school => {
-      school.addEventListener('click', function() {
-        const schoolName = this.textContent;
-        mainContent.style.display = 'none';
-        schoolsList.style.display = 'none';
-        schoolsHomePage.style.display = 'block';
-        selectedSchoolInfo.innerHTML = `
-          <h3>${schoolName}</h3>
-          <p>Welcome to the home page of ${schoolName}. Here you can find information about our programs, faculty, and upcoming events.</p>
-        `;
-      });
-    });
-
-    backToMainButton.addEventListener('click', function() {
-      mainContent.style.display = 'flex';
-      schoolsHomePage.style.display = 'none';
-    });
-
-    const homeIcon = document.querySelector('.fa-home');
-
-    homeIcon.addEventListener('click', function() {
-      mainContent.style.display = 'flex';
-      schoolsHomePage.style.display = 'none';
-      chatPage.style.display = 'none';
-    });
-
-    chatIcon.addEventListener('click', () => {
-      mainContent.style.display = 'none';
-      schoolsHomePage.style.display = 'none';
-      chatPage.style.display = 'block';
-    });
-
-    function addMessage(message, isSent) {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
-      messageElement.classList.add(isSent ? 'sent' : 'received');
-      messageElement.textContent = message;
-      document.getElementById('chat-messages').appendChild(messageElement);
-      const chatMessages = document.getElementById('chat-messages');
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    document.getElementById('send-message').addEventListener('click', () => {
-      const message = document.getElementById('chat-message-input').value.trim();
-      if (message) {
-        addMessage(message, true);
-        document.getElementById('chat-message-input').value = '';
-        
-        // Simulate a received message after a short delay
-        setTimeout(() => {
-          addMessage('This is a demo response.', false);
-        }, 1000);
-      }
-    });
-
-    document.getElementById('chat-message-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        document.getElementById('send-message').click();
-      }
     });
   </script>
-</body>
-</html>
+</body></html>
